@@ -1,0 +1,53 @@
+{% extends "dashboard/base.html" %}
+{% load i18n static %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+  <div class="d-inline-flex w-100 align-items-center mb-3">
+    <h5 class="text-primary-1"><b>{% trans 'My Items' %}</b></h5>
+    <a href="{% url 'dashboard:add-item' %}" role="button" class="btn btn-theme border-0 text-white bg-primary-1 ml-auto">{% trans 'Add Item' %}</a>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-sm table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">{% trans 'Item' %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in page_obj %}
+          <tr>
+            <th scope="row">
+              <a href="{% url 'dashboard:change-item' pk=item.id %}">{{ item.id }}</a>
+            </th>
+            <td>{{ item.name }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+            <span aria-hidden="true">&laquo; {{ page_obj.previous_page_number }}</span>
+          </a>
+        </li>
+      {% endif %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+            <span aria-hidden="true">{{ page_obj.previous_page_number }} &raquo;</span>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endblock %}
+

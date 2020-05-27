@@ -1,0 +1,286 @@
+{% extends "users/base.html" %}
+{% load i18n %}
+ 
+{% block styles %}  
+  <script src="https://www.google.com/recaptcha/api.js?render=6LeheOgUAAAAAJ-KDAEdLjxkoMp-qnZvXdTITFty"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-5 mx-auto my-3">
+      <div class="card">
+        <div class="card-body {{ theme.bg }}">
+          <div class="accordion" id="accordionLogin">
+
+            <div class="collapse {% if request.resolver_match.view_name == 'accounts:login' %}show{% endif %}" id="login-form-collapse" data-parent="#accordionLogin">
+              <h5 class="card-title text-gold text-center mb-3"><b>{% trans "Log in to continue" %}</b></h5>
+              {% if request.resolver_match.view_name == 'accounts:login' %}
+                {% if form.errors or form.non_field_errors %}
+                <div class="alert bg-danger text-white" role="alert">
+                  {% if form.errors and not form.non_field_errors %}
+                    {% for error in form.errors %}
+                      <p class="small mb-0">
+                        {% for k, v in form.errors.items %}
+                          {% for i in v %}{{ i }}<br>{% endfor %}
+                        {% endfor %}
+                      </p>
+                    {% endfor %}
+                  {% endif %}
+                  {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                      <p class="small mb-0">
+                        {{ error }}
+                      </p>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+                {% endif %}
+              {% endif %}
+              <form action="{% url 'accounts:login' %}" method="post" class="w-100" id="login-form">
+                {% csrf_token %}
+                <div class="form-label-group">
+                  {{ form.username }}
+                  {{ form.username.label_tag }}
+                </div>
+                <div class="form-label-group">
+                  {{ form.password }}
+                  {{ form.password.label_tag }} 
+                </div>
+                <input type="hidden" name="next" value="{{ request.get.next }}">
+                <script type="text/javascript">
+                    grecaptcha.ready(function() {
+                        grecaptcha.execute('6LeheOgUAAAAAJ-KDAEdLjxkoMp-qnZvXdTITFty', {action: 'login_form'})
+                        .then(function(token) {
+                            var element = document.querySelector('.g-recaptcha[data-form=loginform]');
+                            element.value = token;
+                        });
+                    });
+                </script>
+                <input class="g-recaptcha" type="hidden" name="captcha" required_score="0.5" data-sitekey="6LeheOgUAAAAAJ-KDAEdLjxkoMp-qnZvXdTITFty" required id="id_captcha" data-form="loginform" data-size="normal">
+                <button type="submit" class="btn btn-block btn-theme bg-primary-1 text-white border-0 mb-3">{% trans "Log in" %}</button>
+              </form>
+              <ul class="navbar-nav flex-row text-center">
+                <li class="nav-item mr-auto">
+                  <a class="nav-link pl-0 py-0" data-toggle="collapse" data-target="#create-form-collapse">{% trans "Create account" %}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pr-0 py-0" data-toggle="collapse" data-target="#reset-password-form-collapse">{% trans "Forgot password?" %}</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="collapse {% if request.resolver_match.view_name == 'accounts:create' %}show{% endif %}" id="create-form-collapse" data-parent="#accordionLogin">
+              <h5 class="card-title text-gold text-center mb-3"><b>{% trans "Create Account" %}</b></h5>
+              <form action="{% url 'accounts:create' %}" method="post" class="w-100" id="create-form">
+                {% csrf_token %}
+                <div class="form-row">
+                  <div class="col-sm form-label-group">
+                    {{ createform.first_name }}
+                    {{ createform.first_name.label_tag }}
+                  </div>
+                  <div class="col-sm form-label-group">
+                    {{ createform.last_name }}
+                    {{ createform.last_name.label_tag }}
+                  </div>
+                </div>
+                <div class="form-label-group">
+                  {{ createform.middle_name }}
+                  {{ createform.middle_name.label_tag }}
+                </div>
+                <div class="form-label-group">
+                  {{ createform.username }}
+                  {{ createform.username.label_tag }}
+                </div>
+                 <div class="form-label-group">
+                  {{ createform.email }}
+                  {{ createform.email.label_tag }}
+                </div>
+                <div class="form-label-group">
+                  {{ createform.password }}
+                  {{ createform.password.label_tag }}
+                </div>
+                <div class="custom-control custom-checkbox mb-3 text-center-sm">
+                  <input type="checkbox" class="custom-control-input" id="id_rules_accepted" name="rules_accepted" required>
+                  <label class="custom-control-label" for="id_rules_accepted">{% trans "I accept Terms and Conditions" %}</label>
+                </div>
+                <script type="text/javascript">
+                    grecaptcha.ready(function() {
+                        grecaptcha.execute('6LeheOgUAAAAAJ-KDAEdLjxkoMp-qnZvXdTITFty', {action: 'create_form'})
+                        .then(function(token) {
+                            var element = document.querySelector('.g-recaptcha[data-form=createform]');
+                            element.value = token;
+                        });
+                    });
+                </script>
+                <input class="g-recaptcha" type="hidden" name="captcha" required_score="0.5" data-sitekey="6LeheOgUAAAAAJ-KDAEdLjxkoMp-qnZvXdTITFty" required id="id_captcha" data-form="createform" data-size="normal">
+                <button type="submit" class="btn btn-block btn-theme bg-primary-1 text-white border-0 mb-3">{% trans "Create account" %}</button>
+              </form>
+              <ul class="navbar-nav flex-row text-center">
+                <li class="nav-item mr-auto">
+                  <a class="nav-link pl-0 py-0" data-toggle="collapse" data-target="#login-form-collapse">{% trans "Log in" %}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pr-0 py-0" data-toggle="collapse" data-target="#reset-password-form-collapse">{% trans "Forgot password?" %}</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="collapse {% if request.resolver_match.view_name == 'accounts:password_reset' %}show{% endif %}" id="reset-password-form-collapse" data-parent="#accordionLogin">
+              <h5 class="card-title text-gold text-center mb-3"><b>{% trans "Reset password" %}</b></h5>
+              <form action="{% url 'accounts:password_reset' %}" method="post" class="w-100">
+                {% csrf_token %}
+                <div class="form-label-group">
+                  <input type="email" name="email" placeholder="{% trans 'E-mail' %}" class="form-control form-control-gold" autocomplete="current-password" maxlength="32" required id="id_email">
+                  <label for="id_email">{% trans 'E-mail' %}:</label>
+                </div>
+                <button type="submit" class="btn btn-block btn-theme bg-primary-1 text-white border-0 mb-3">{% trans "Reset password" %}</button>
+              </form>
+              <ul class="navbar-nav flex-row justify-content-between text-center">
+                <li class="nav-item mr-auto">
+                  <a class="nav-link pl-0 py-0" data-toggle="collapse" data-target="#login-form-collapse">{% trans "Log in" %}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pr-0 py-0" data-toggle="collapse" data-target="#create-form-collapse">{% trans "Create account" %}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha256-1A78rJEdiWTzco6qdn3igTBv9VupN3Q1ozZNTR4WE/Y=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+  function disableSubmitButton(location) {
+    let text = $('[type=submit]', location).text();
+    $('[type=submit]', location).html('<text class="d-none">');
+    $('[type=submit] text', location).text(text);
+    $('[type=submit]', location).prepend('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>').attr('disabled','disabled');
+    $('.invalid-feedback', location).remove();
+    $('.is-invalid', location).removeClass('is-invalid');
+  }
+
+  function enableSubmitButton(location) {
+    let text = $('[type=submit] text', location).text();
+    $('[type=submit]', location).html("");
+    $('[type=submit]', location).text(text);
+    $('[type=submit]').removeAttr('disabled');
+  }
+  
+  function processErrors(error, location=null) {
+    if (error.message.startsWith('451')) {
+      Swal.fire({
+        icon: 'error',
+        title: gettext("We can't register you"),
+        text: gettext("Our services are not available in your country"),
+        customClass: {
+          confirmButton: 'btn btn-gold bg-gold',
+        }
+      });
+      return;
+    }
+    if (error.content.non_field_errors.length > 0) {
+      error = error.content.non_field_errors.join('\n');
+    } else if (error.message.startsWith('500')) {
+      error = gettext("Internal server error. Please try again or contact support.");
+    } else if (error.message.startsWith('429')) {
+      error = gettext("Too many requests. Try again later or contact support");
+    } else if (error.message.startsWith('404')) {
+      error = gettext("Not found. Try again later or contact support");
+    } else if (error.message.startsWith('403')) {
+      Swal.fire({
+        icon: 'warning',
+        title: gettext('Session expired'),
+        text: gettext('You will be redirected to login page'),
+        customClass: {
+          confirmButton: 'btn btn-gold bg-gold',
+        }
+      }).then(function(result) {
+        document.location.reload();
+      });
+    } else if (location) {
+      for (let [key, value] of Object.entries(error.content.errors)) {
+        $(`[name=${key}]`, location).after(`<div class="invalid-feedback">${value.join('<br>')}</div>`).addClass('is-invalid');
+      }
+      error = (error.content.non_field_errors.join('<br>')) ? error.content.non_field_errors.length > 0 : gettext("Please correct the data");
+    }
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 5000,
+      icon: 'error',
+      title: error,
+      onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    });
+  }
+
+  $("#create-form").on('submit', function(){
+    let form = $(this);
+    disableSubmitButton('#create-form');
+    $.ajax({
+      url: form.attr("action"),
+      method: form.attr("method"),
+      data: form.serialize(),
+      headers: {
+        'X-CSRFToken': $.cookie('csrftoken'),
+      },
+      success: function (data) {
+        enableSubmitButton("#create-form");
+        Swal.fire({
+          title: gettext('Created'),
+          html: gettext('Please check your email to confirm your account'),
+          icon: 'success',
+          customClass: {
+            confirmButton: 'btn btn-gold bg-gold',
+          }
+        });
+      },
+      error: function(jqxhr, ts, err){
+        enableSubmitButton("#create-form");
+        grecaptcha.execute('6LeheOgUAAAAAJ-KDAEdLjxkoMp-qnZvXdTITFty', {action: 'create_form'}).then(function(token) {
+          var element = document.querySelector('.g-recaptcha[data-form=createform]');
+          element.value = token;
+        });
+
+        if (jqxhr.status >= 400) {
+          let error = {
+            message: `${jqxhr.status} ${jqxhr.statusText}`,
+            content: jqxhr.responseJSON,
+          };
+          console.log(jqxhr);
+          processErrors(error, '#create-form');
+        }
+      }
+    });
+    return false;
+  });
+</script>
+<script type="text/javascript">
+  $('#login-form-collapse').on('show.bs.collapse', function(){
+    window.history.replaceState({page: "login"}, gettext("Log in") + " | AuroGold", "{% url 'accounts:login' %}");
+    document.title = gettext("Log in") + " | AuroGold";
+  });
+</script>
+<script type="text/javascript">
+  $('#create-form-collapse').on('show.bs.collapse', function(){
+    window.history.replaceState({page: "create"}, gettext("Create account") + " | AuroGold", "{% url 'accounts:create' %}");
+    document.title = gettext("Create account") + " | AuroGold";
+  });
+</script>
+<script type="text/javascript">
+  $('#reset-password-form-collapse').on('show.bs.collapse', function(){
+    window.history.replaceState({page: "password_reset"}, gettext("Reset password") + " | AuroGold", "{% url 'accounts:password_reset' %}");
+    document.title = gettext("Reset password") + " | AuroGold";
+  });
+</script>
+{{ createform.media }}
+{% endblock %}

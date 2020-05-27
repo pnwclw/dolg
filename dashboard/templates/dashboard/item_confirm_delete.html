@@ -1,0 +1,24 @@
+{% extends "dashboard/base.html" %}
+{% load i18n static %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md"></div>
+    <div class="col-md">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-primary-1 text-center mb-3"><b>{{ title }}</b></h5>
+          <form action="{% url 'dashboard:delete-item' pk=object.pk %}" method="post" class="w-100">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-block btn-danger text-white border-0 mb-3">{% trans "Yes" %}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md"></div>
+  </div>
+{% endblock %}
+

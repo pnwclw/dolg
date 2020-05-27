@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n static statici18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+  
+{% block styles %}
+{% endblock %}
+
+{% block body %}
+  <main class="container-fluid">
+    {% block content %}
+    {% endblock %}
+  </main>
+
+{% endblock %}
+  
+  
+{% block scripts %}
+  {{ block.super }}
+  <script type="text/javascript">
+    var prevScrollpos = window.pageYOffset;
+    window.onscroll = function() {
+      var currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos) {
+        document.getElementById("navscroll").style.top = "82px";
+      } else {
+        document.getElementById("navscroll").style.top = "38px";
+      }
+      prevScrollpos = currentScrollPos;
+    }
+  </script>
+{% endblock %}

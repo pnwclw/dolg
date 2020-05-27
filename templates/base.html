@@ -1,0 +1,146 @@
+{% load i18n static statici18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicon/android-chrome-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg' %}" color="#0194fe">
+    <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}">
+    <meta name="msapplication-TileColor" content="#0194fe">
+    <meta name="msapplication-TileImage" content="{% static 'favicon/mstile-144x144.png' %}">
+    <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+    <title>{{ title }} | DOLG</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <link id="night-css" rel="stylesheet" href="{% static 'css/common-night.css' %}" disabled>
+    <script src="{% static 'js/cookies.js' %}"></script>
+    {% block styles %}
+    {% endblock %}
+  </head>
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+      <div class="container-fluid">
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <div class="header-item toggler d-lg-none">
+            <a href="#" class="sidenav-toggler nav-link">
+              <div class="bar1"></div>
+              <div class="bar2"></div>
+              <div class="bar3"></div>
+            </a>
+          </div>
+
+
+          <div class="header-item text-center">
+            <a href="/" class="navbar-brand mr-auto">
+              <img width="56" height="56" src="{% static 'img/logo.png' %}" alt="logo">
+            </a>
+          </div>
+          <!-- .site-logo -->
+{% if request.user %}
+
+          <div class="header-item">
+              <ul class="navbar-nav d-none d-lg-flex float-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard:main' %}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+
+                    <a class="nav-link" href="{% url 'dashboard:given' %}">Given Items</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard:borrowed' %}">Borrowed Items</a>
+                </li>
+              </ul>
+
+          </div>
+{% endif %}
+          <div class="header-item">
+            <ul class="navbar-nav d-none d-lg-flex float-right">
+              <li class="nav-item">
+                <div class="float-lg-right">
+                  <div class="dropdown d-inline-block">
+                    <a class="nav-link dropdown-toggle m-lg-0 mr-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-globe-europe"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="#">EN</a>
+                    </div>
+                  </div>
+                  <a class="nav-link d-inline-block m-lg-0 mr-2" href="#" onclick="nightThemeToggler();"><i class="fas fa-moon"></i></a>
+                  <a class="nav-link d-inline-block m-lg-0 mr-2" href="{% url 'accounts:logout' %}"><i class="fas fa-home"></i></a>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+      </div>
+    </div>
+  </header>
+
+  <div class="sidenav text-nowrap shadow-lg" id="sidenav">
+    <div class="whitespace"></div>
+    <!--<a class="nav-droplink" href="" id="contents" aria-expanded="true" data-toggle="collapse" data-target="#contentsDrop" aria-controls="contentsDrop"><i class="fas fa-globe-europe mr-2"></i>Language</a>
+    <div id="contentsDrop" class="nav-drop collapse" aria-labelledby="contents" data-parent=".sidenav">
+      <a class="nav-link" href="#about">About</a>
+      <a class="nav-link" href="#experience">Experience</a>
+      <a class="nav-link" href="#projects">My projects</a>
+      <a class="nav-link" href="#links">Links</a>
+    </div>-->
+    {% if request.user %}
+      <a class="nav-link" href="{% url 'dashboard:main' %}">Dashboard</a>
+      <a class="nav-link" href="{% url 'dashboard:given' %}">Given Items</a>
+      <a class="nav-link" href="{% url 'dashboard:borrowed' %}">Borrowed Items</a>
+    {% endif %}
+    <a class="nav-link" onclick="nightThemeToggler();"><i class="fas fa-moon mr-2"></i>Night theme</a>
+    <a class="nav-link" href="{% url 'accounts:logout' %}"><i class="fas fa-home mr-2"></i>Log out</a>
+  </div>
+   {% block body %}
+   {% endblock %}
+  </body>
+  <script src="{% statici18n LANGUAGE_CODE %}"></script>
+  <script src="https://kit.fontawesome.com/b6ced88731.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js" integrity="sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=" crossorigin="anonymous"></script>
+  <script src="{% static 'js/sidenav.js' %}"></script>
+  <script src="{% static 'js/gradient.js' %}"></script>
+  <script>
+    $("[data-datetime]").each(function(){
+      $(this).text(moment(this.getAttribute('data-datetime')).format('LLL'));
+    });
+  </script>
+  <script type="text/javascript">
+    let prevScrollpos = window.pageYOffset;
+    window.onscroll = function() {
+      let currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos) {
+        document.getElementById("navscroll").style.top = "82px";
+      } else {
+        document.getElementById("navscroll").style.top = "42px";
+      }
+      prevScrollpos = currentScrollPos;
+    }
+  </script>
+  <script>
+    $('body').css({'padding-bottom': $('.footer').height() + 'px'})
+  </script>
+  <script>
+    function nightThemeToggler() {
+      document.getElementById('night-css').disabled = getCookie('night-theme') == "true" ? true : false;
+      setCookie('night-theme', !document.getElementById('night-css').disabled, { 'max-age': 31536000 });
+    }
+  </script>
+  {% block scripts %}
+  {% endblock %}
+</html>
