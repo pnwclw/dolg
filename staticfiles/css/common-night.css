@@ -1,0 +1,140 @@
+body {
+  background-color: var(--dark);
+}
+
+.card:not(.bg-primary-1){
+  background-color: var(--dark);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.125);
+}
+.card.bg-primary-1 {
+  color: var(--dark)
+}
+.navbar-light.bg-white {background-color: var(--dark)!important;}
+.navbar-light .navbar-nav .nav-link{color:rgba(255,255,255,.5)}
+.navbar-light .navbar-nav .nav-link:focus,.navbar-light .navbar-nav .nav-link:hover{color: var(--alt-1);}
+.navbar-light .navbar-nav .nav-link.disabled{color:rgba(255,255,255,.25)}
+.navbar-light .navbar-nav .active>.nav-link,.navbar-light .navbar-nav .nav-link.active,.navbar-light .navbar-nav .nav-link.show,.navbar-light .navbar-nav .show>.nav-link{color:#fff}
+.navbar-light .navbar-text{color:rgba(255,255,255,.5)}.navbar-light .navbar-text a{rgba(255,255,255,.9)}
+.navbar-light .navbar-text a:focus,.navbar-light .navbar-text a:hover{rgba(255,255,255,.9)}
+.change .bar1, .change .bar3 {
+  background-color: var(--alt-1)!important;
+}
+.sidenav {
+  background-color: var(--dark);
+}
+.sidenav .nav-link {
+  color: #fff;
+}
+
+.footer {
+  background-color: var(--dark);
+  color: #fff;
+}
+
+.table {
+  color: #fff;
+}
+.text-white {
+  color:#000!important;
+}
+
+.form-control {
+  color: #dee2e6;
+  background-color: var(--dark);
+  border: 1px solid #6c757d;
+}
+
+.form-control:focus {
+  color: #dee2e6;
+  background-color: var(--dark);
+  border-color: #0194FE;
+  box-shadow: 0 0 0 0.2rem rgba(1,148,254,.25);
+}
+
+.form-label-group > label {
+  color: #dee2e6;
+}
+
+.form-label-group input:not(:placeholder-shown) ~ label, .form-label-group select:not(:placeholder-shown) ~ label {
+  color: #ced4da;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+@supports (-ms-ime-align: auto) {
+  .form-label-group > label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder, .form-label-group select::-ms-input-placeholder {
+    color: #ced4da;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .form-label-group > label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder, .form-label-group select:-ms-input-placeholder {
+    color: #ced4da;
+  }
+}
+
+
+.form-control:disabled, .form-control[readonly]{
+  background-color: #495057;
+}
+
+.bg-light {
+  background-color: #495057!important;
+}
+
+.nav-underline .nav-link {
+  color: rgba(255,255,255,.5);
+}
+
+.nav-underline .active {
+  color: rgba(255,255,255,.9);
+}
+
+.page-link {
+  color: #fff;
+  background-color: var(--dark);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(255,255,255,.075);
+  color: #fff;
+}
+
+.table td, .table th, .table thead th {
+  border-color: #454d55;
+}
+
+main {
+  color: #fff;
+}
+
+.tree li::before {
+  border-left: 1px solid rgba(255,255,255,.125)!important;
+}
+
+.tree li:after {
+  border-top: 1px solid rgba(255,255,255,.125)!important;
+}
+
+.tree li div.tree-node {
+  border: 1px solid rgba(255,255,255,.125)!important;
+}
+
+.tree li.parent_li>div.tree-node:hover, .tree li.parent_li>div.tree-node:hover+ul li div.tree-node, .tree li>div.tree-node.not-clicked-yet:hover {
+  background-color: rgba(255,255,255,.075)!important;
+  color: #fff!important;
+}
+
+.custom-control-label::before {
+  background-color: var(--dark);
+  border-color: #6c757d;
+}
