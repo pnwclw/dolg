@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Initialize environ
 env = environ.Env()
-environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env_dev'))
+environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -34,7 +34,7 @@ SECRET_KEY = env.str('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".ngrok.io"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".ngrok.io", ".herokuapp.com"]
 
 # Application definition
 
