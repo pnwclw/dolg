@@ -60,3 +60,6 @@ class ExtendTermRequestAdmin(ImportExportMixin, SimpleHistoryAdmin):
 
 
 
+admin.site.site_header = "DOLG administration"
+admin.site.site_title = "DOLG administration"
+admin.site.index_title = "Welcome to DOLG administration"
